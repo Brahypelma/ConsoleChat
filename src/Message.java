@@ -1,7 +1,17 @@
-import java.io.PrintWriter;
+
 
 public class Message {
-   public String text;
-   public PrintWriter to;
+    String text;
+    Client to;
 
-   }
+    public Message(final String text) {
+        this.text = text;
+    }
+
+    public Message(final String text, final Client to) {
+        this.text = text;
+        this.to = to;
+
+
+    }
+}

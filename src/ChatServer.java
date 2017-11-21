@@ -18,14 +18,19 @@ public class ChatServer {
         Thread messageSender = new Thread(sender);
         messageSender.start();
 
-
-
         while (true) {
             Socket clientSocket = serverSocket.accept();
 
-            Thread clientMessageReader = new Thread(new ClientMessageReader(clientSocket,messagesQueue,clients));
-            clientMessageReader.start();
+            Runnable clientReader = new ClientUpdater(clientSocket,
+                    messagesQueue,
+                    clients,
+                    new ClientCreator(),
+                    new IncomingMessageProcessorCreator());
+
+            Thread clientThread = new Thread(clientReader);
+            clientThread.start();
         }
+
     }
 }
 

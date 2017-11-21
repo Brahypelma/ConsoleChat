@@ -24,6 +24,7 @@ public class ChatClient {
                 try {
                     while(true) {
                         String message = consoleInput.readLine();
+                        if(message == null) System.exit(1);
                         serverWriter.println(message);
                     }
                 } catch (IOException e) {

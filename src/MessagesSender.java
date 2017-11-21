@@ -25,26 +25,24 @@ public class MessagesSender implements Runnable {
 
     private void SendMessage(Message message) {
         if (message.to == null) {
-            sendAll(message,clients);
+            sendAll(message);
         } else {
-            send(message);
+            send(message,message.to);
         }
     }
 
-    private void send(final Message message) {
+    private void send(final Message message, Client client) {
         synchronized (clients) {
-            for(Client client : clients) {
-                if(client.getPrintWriter().equals(message.to)) {
+                if(clients.contains(client)) {
                     client.getPrintWriter().println(message.text);
-                    return;
                 }
             }
 
         }
 
-    }
 
-    private void sendAll(Message message , List<Client> clients) {
+
+    private void sendAll(Message message) {
         synchronized (clients) {
             for(Client client : clients) {
                 client.getPrintWriter().println(message.text);
